@@ -38,6 +38,7 @@ def filetypesSelect(filedf, fileName, filetypesStr, check):
 def change_label_number():
     strLabel = tk.Label(window, text='處理中...')
     strLabel.pack(anchor='center')
+    window.update()
     global url
     global zipfileName
     global comboExample
@@ -45,12 +46,18 @@ def change_label_number():
     req = requests.get('https://clinicaltrials.gov/ct2/results?cond=&term=&cntry=&state=&city=&dist=')
     soup = BeautifulSoup(req.text, 'html5lib')
     CTDataCounts = int(''.join(list(filter(str.isdigit, soup.findAll('div', {'class': 'sr-search-terms'})[1].text))))
+    strLabel2 = tk.Label(window, text='Downloads Clinical Trials Data.')
+    strLabel2.pack(anchor='center')
+    window.update()
     for n in tqdm(range(1, CTDataCounts // 10000 + 2 - 29), ascii=True, desc='Downloads Data -> ', ncols=69):
         url = "https://clinicaltrials.gov/ct2/results/download_fields?down_count=10000&down_flds=all&down_fmt=csv&down_chunk={}".format(
             n)
         s = requests.get(url).content
         allCTData.extend(pd.read_csv(io.StringIO(s.decode('utf-8')), encoding='utf-8').to_dict('records'))
     allCTDataDF = pd.DataFrame(allCTData)
+    strLabel3 = tk.Label(window, text='Downloads Clinical Trials Data Done.')
+    strLabel3.pack(anchor='center')
+    window.update()
     allCTDataDF = allCTDataDF.rename(
         dict(zip(allCTDataDF.columns, [i.replace(' ', '') for i in allCTDataDF.columns])),
         axis=1)
@@ -65,6 +72,9 @@ def change_label_number():
     with open('ClinicalTrials_DataCounts.txt', 'w', encoding='utf-8') as txt:
         txt.write(allCTDataCounts)
     print('Loading Clinical Trials Data to {}'.format(comboExampleget))
+    strLabel4 = tk.Label(window, text='Loading Clinical Trials Data to {}'.format(comboExampleget))
+    strLabel4.pack(anchor='center')
+    window.update()
     try:
         filetypesSelect(allCTDataDF[allCTDataDF_Columns], 'ClinicalTrials', comboExampleget, DateTimeSTR)
         window.quit()
@@ -91,7 +101,7 @@ def change_label_number():
 
 
 window = tk.Tk()
-window.title('請選擇輸出檔案格式(Select File Type)')
+window.title('請選擇 Clinical Trials 輸出檔案格式(Select File Type)')
 window.geometry('400x300')
 try:
     allCTData = []
