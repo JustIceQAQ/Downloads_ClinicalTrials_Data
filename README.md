@@ -1,6 +1,10 @@
 # Downloads_ClinicalTrials_Data
 Downloads_ClinicalTrials_Data
 
+New download All
+https://clinicaltrials.gov/api/gui/ref/download_all
+
+
 # 前言
 
 下載美國 [clinicaltrials.gov](https://clinicaltrials.gov/) 臨床試驗資料
