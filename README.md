@@ -1,9 +1,14 @@
 # Downloads_ClinicalTrials_Data
 Downloads_ClinicalTrials_Data
+![](https://img.shields.io/maintenance/no/2019)
 
 New download All
 https://clinicaltrials.gov/api/gui/ref/download_all
 
+New download API GUI
+https://clinicaltrials.gov/api/gui/home
+
+不用再慢慢爬了，好好串官方API吧
 
 # 前言
 
